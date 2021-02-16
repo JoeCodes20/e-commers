@@ -1,0 +1,53 @@
+{
+    "items": [
+        {
+            "pc": {"id": "1"},
+            "fields":{
+                "title": "Ryzen 3 cpu",
+                "price": 85.99,
+                "image": {"fields": {"file": {"url": "./pc images/ryzen 3.png"}}}
+            }
+        },
+        {
+            "pc": {"id": "2"},
+            "fields":{
+                "title": "Ryzen 5 cpu",
+                "price": 109.99,
+                "image": {"fields": {"file": {"url": "./pc images/ryzen 5.png"}}}
+            }
+        },
+        {
+            "pc": {"id": "3"},
+            "fields":{
+                "title": "Intel i7 cpu",
+                "price": 209.99,
+                "image": {"fields": {"file": {"url": "./pc images/i7 cpu.png"}}}
+            }
+        },
+        {
+            "pc": {"id": "4"},
+            "fields":{
+                "title": "radeon 570 gpu",
+                "price": 85.99,
+                "image": {"fields": {"file": {"url": "./pc images/radeon 570.png"}}}
+            }
+        },
+        {
+            "pc": {"id": "5"},
+            "fields":{
+                "title": "gtx 1660 gpu",
+                "price": 85.99,
+                "image": {"fields": {"file": {"url": "./pc images/gtx 1660.png"}}}
+            }
+        },
+        {
+            "pc": {"id": "6"},
+            "fields":{
+                "title": "rtx 2080 gpu",
+                "price": 85.99,
+                "image": {"fields": {"file": {"url": "./pc images/gtx 2080.png"}}}
+            }
+        }
+        
+    ]
+}

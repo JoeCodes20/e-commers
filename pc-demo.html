@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pc Demo</title>
+    <script src="https://kit.fontawesome.com/1057ea4189.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/demo-pc/style/style.css">
+</head>
+<body>
+    <header>
+        <div id="navbar">
+            <i class="fas fa-bars hidden"></i>
+            <h1 class="logo">Custom PC</h1>
+            <ul class="links">
+                <a href="#">Products</a>
+                <a href="#">Features</a>
+                <a href="#">About</a>
+            </ul>
+            <i class="fas fa-shopping-cart"></i>
+        </div>
+    </header>
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Custom Builds</h2>
+            <button class="heroBtn">Build Now</button>
+        </div>
+    </section>
+    <section class="Products">
+        <div class="section-title">
+            <h1>Product Material</h1>
+        </div>
+        <div class="product-center">
+            <!-- single product -->
+            <!-- <article class="Product">
+                <div class="img-container">
+                    <img src="/demo-pc/pc images/ryzen 3.png" alt="" class="itemimg">
+                    <button class="additem" data-id="1">
+                        <i class="fas fa-shopping-cart"></i>
+                        add to cart
+                    </button>
+                </div>
+                <h3>Ryzen 3 cpu</h3>
+                <h4>$85.99</h4>
+            </article> -->
+            <!-- single product end -->   
+        </div>
+    </section>
+    <!-- cart -->
+    <div class="cart-overlay"></div> 
+
+    <div class="cart">
+        <span class="close-cart">
+            <i class="far fa-window-close"></i>
+        </span>
+        <h2>Your Cart</h2>
+        <div class="cart-content">
+            <div class="cart-item">
+                <img src="./pc images/gtx 2080.png" alt="">
+                <div class="cart-info">
+                    <h4>Gtx 2080</h4>
+                    <h5>$99.00</h5>
+                    <span class="remove">remove</span>
+                </div>
+                <div class="cart-index">
+                    <i class="fas fa-chevron-up"></i>
+                    <p class="item-amount">1</p>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+            
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <h2>Your Total:
+                    <span class="cart-total">$0</span>
+                </h2>
+                <button class="clear-cart">Clear Cart</button>
+            </div>
+
+        </div>
+    </div>
+    <!-- cart end -->
+    <script src="/demo-pc/script.js"></script>
+</body>
+</html>
