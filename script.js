@@ -6,6 +6,7 @@ const cartDom = document.querySelector('.cart');
 const cartContent = document.querySelector('.cart-content')
 const cartItems = document.querySelector('.cart-item')
 const ProductsDom = document.querySelector('.product-center')
+const cartTotal = document.querySelector('.Incart-total')
 
 let cart = []
 let buttonDom = []
@@ -69,11 +70,54 @@ class Ui {
                 cart = [...cart, cartItem]
                 Storage.saveCartItems(cart)
                 this.setCartValues(cart)
-
+                this.addCartItem(cartItem)
+                
             })
         }) 
     }
     setCartValues(cart){
+        let totalItem = 0
+        cart.map(item =>{
+            totalItem += item.price
+        })
+        cartTotal.innerText = parseFloat(totalItem.toFixed(2))
+    }
+    addCartItem(item){
+        const div = document.createElement('div')
+        div.classList.add('cart-item')
+        div.innerHTML= `
+        <img src='${item.image}' alt="">
+        <div class="cart-info">
+            <h4>${item.title}</h4>
+            <h5>${item.price}</h5>
+            <span class="remove">remove</span>
+        </div>
+        <div class="cart-index">
+            <i class="fas fa-chevron-up"></i>
+            <p class="item-amount">1</p>
+            <i class="fas fa-chevron-down"></i>
+        </div>`
+        cartContent.appendChild(div)
+        
+    }
+    setupAPP(){
+        cart = Storage.getCart()
+        this.setCartValues(cart)
+        this.populateCart(cart)
+    }
+    populateCart(cart){
+        cart.forEach(item=> this.addCartItem(item))
+    }
+    cartLogic(){
+        clearCart.addEventListener('click', ()=>{
+            this.clearCart()
+        })
+    }
+    clearCart(){
+        let cartItem = cart.map(item =>item.id)
+        cartItem.forEach(id=> this.removeItems(id))
+    }
+    removeItems(id){
         
     }
 }
@@ -89,12 +133,16 @@ class Storage{
     static saveCartItems(cart){
         localStorage.setItem('cart', JSON.stringify(cart))
     }
+    static getCart(){
+        return localStorage.getItem('cart')?JSON.parse(localStorage.getItem('cart')) : []
+    }
     
 }  
 
 document.addEventListener('DOMContentLoaded', ()=>{
     const products = new Products();
     const ui = new Ui();
+    ui.setupAPP();
     products.getProducts().then(items=> {
         ui.displayProducts(items) 
         Storage.saveProducts(items)
@@ -103,7 +151,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
     })
     
 })
-
 
 
 
