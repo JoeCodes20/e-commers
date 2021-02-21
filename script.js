@@ -14,127 +14,145 @@ let buttonDom = []
 // classes
 class Products {
     async getProducts(){
-        try{
-            const results = await fetch('products.json')
-            const data = await results.json()
-            const products = data.items
-            const items = products.map(item =>{
-                const {id} = item.pc;
-                const {title, price} = item.fields;
-                const image = item.fields.image.fields.file.url
+        try {
+            const responce = await fetch('products.json')
+            const data = await responce.json()
+            let products = data.items
+            const items = products.map(items =>{
+                const {id} = items.pc
+                const {title} = items.fields
+                const {price} = items.fields
+                const image = items.fields.image.fields.file.url
                 return {id, title, price, image}
             })
             return items
-        }catch (err){
-            console.log(err)
+            
+        } catch (error) {
+            console.log(error)
         }
     }
     
 }
 
 class Ui {
-    displayProducts(items){
-        let results = ''
-        items.forEach(items =>{
-            results +=`
+    displayProducts(item){
+        let result = ''
+        item.forEach(item =>{
+            result += `
             <article class="Product">
-            <div class="img-container">
-                <img src="${items.image}" alt="" class="itemimg">
-                <button class="additem" data-id=${items.id}>
-                    <i class="fas fa-shopping-cart"></i>
-                    add to cart
-                </button>
-            </div>
-            <h3>${items.title}</h3>
-            <h4>$${items.price}</h4>
+                <div class="img-container">
+                    <img src="${item.image}" alt="" class="itemimg">
+                    <button class="additem" data-id="${item.id}">
+                        <i class="fas fa-shopping-cart"></i>
+                        add to cart
+                    </button>
+                </div>
+                <h3>${item.title}</h3>
+                <h4>$${item.price}</h4>
             </article>
             `
-            return results
         })
-        ProductsDom.innerHTML = results
+        ProductsDom.innerHTML=result
     }
-    getButtonData(item){
-        const addCartBtn = [...document.querySelectorAll('.additem')];
-        buttonDom = addCartBtn
-        addCartBtn.forEach(button =>{
+    getButtonData(){
+        const itemBtn = [...document.querySelectorAll('.additem')]
+        buttonDom = itemBtn
+        itemBtn.forEach(button =>{
             const id = button.dataset.id
             const inCart = cart.find(item => item.id === id)
-            if (inCart){
+            if(inCart){
                 button.innerText = 'In Cart'
-                button.disable = true               
+                button.disabled = true
             }
-            button.addEventListener('click', (e)=>{
-                e.target.innerText= 'In Cart'
-                e.target.disable = true
-                const cartItem = Storage.getProducts(id)
-                cart = [...cart, cartItem]
-                Storage.saveCartItems(cart)
-                this.setCartValues(cart)
-                this.addCartItem(cartItem)
-                
+            button.addEventListener('click', ()=>{
+                button.innerText= 'In Cart'
+                button.disabled = true
+                const item = Storage.getProductId(id)
+                cart = [...cart, item]
+                Storage.saveCart(cart)
+                this.addToCart(item)
+                this.setCartValue(cart)
             })
-        }) 
-    }
-    setCartValues(cart){
-        let totalItem = 0
-        cart.map(item =>{
-            totalItem += item.price
         })
-        cartTotal.innerText = parseFloat(totalItem.toFixed(2))
     }
-    addCartItem(item){
+    addToCart(cart){
         const div = document.createElement('div')
         div.classList.add('cart-item')
-        div.innerHTML= `
-        <img src='${item.image}' alt="">
+        div.innerHTML = `
+        <img src='${cart.image}' alt="">
         <div class="cart-info">
-            <h4>${item.title}</h4>
-            <h5>${item.price}</h5>
-            <span class="remove">remove</span>
+        <h4>${cart.title}</h4>
+        <h5>$${cart.price}</h5>
+        <span class="remove" data-id=${cart.id}>remove</span>
         </div>
-        <div class="cart-index">
-            <i class="fas fa-chevron-up"></i>
-            <p class="item-amount">1</p>
-            <i class="fas fa-chevron-down"></i>
-        </div>`
+        `
         cartContent.appendChild(div)
-        
     }
-    setupAPP(){
-        cart = Storage.getCart()
-        this.setCartValues(cart)
-        this.populateCart(cart)
+    setCartValue(cart){
+        let tempTotal = 0
+        cart.map(item => {
+            tempTotal += item.price
+        })
+        cartTotal.innerText = tempTotal   
     }
-    populateCart(cart){
-        cart.forEach(item=> this.addCartItem(item))
+    appStart(){
+        cart = Storage.getCartItem()
+        this.setCartValue(cart)
+        this.fillCart(cart)
+    }
+    fillCart(cart){
+        cart.forEach(item=>{
+            this.addToCart(item)
+        })
     }
     cartLogic(){
         clearCart.addEventListener('click', ()=>{
             this.clearCart()
         })
+        cartContent.addEventListener('click', (e)=>{
+            if(e.target.classList.contains('remove')){
+                let remove = e.target
+                let id = remove.dataset.id
+                this.removeItem(id)
+                cartContent.removeChild(remove.parentElement.parentElement)
+            }
+        })
     }
     clearCart(){
-        let cartItem = cart.map(item =>item.id)
-        cartItem.forEach(id=> this.removeItems(id))
+        let cartItem = cart.map(item => item.id)
+        cartItem.forEach(id => this.removeItem(id))
+        while(cartContent.children.length>0){
+            cartContent.removeChild(cartContent.children[0])
+        }
     }
-    removeItems(id){
-        
+    removeItem(id){
+        cart = cart.filter(item => item.id !== id)
+        this.setCartValue(cart)
+        Storage.saveCart(cart)
+        const button = this.singleBtn(id)
+        button.disabled = false
+        button.innerHTML = `<i class="fas fa-shopping-cart"></i>
+        add to cart`
+
+    }
+    singleBtn(id){
+        return buttonDom.find(button => button.dataset.id === id)
     }
 }
 
 class Storage{
-    static saveProducts(items){
-        localStorage.setItem('items', JSON.stringify(items))
+    static saveProducts(item){
+        localStorage.setItem('item', JSON.stringify(item))
     }
-    static getProducts(id){
-        const products = JSON.parse(localStorage.getItem('items'))
-        return products.find(product => product.id === id)
+    static getProductId(id){
+        const product = JSON.parse(localStorage.getItem('item'))
+        return product.find(item => item.id === id)
     }
-    static saveCartItems(cart){
+    static saveCart(cart){
         localStorage.setItem('cart', JSON.stringify(cart))
-    }
-    static getCart(){
-        return localStorage.getItem('cart')?JSON.parse(localStorage.getItem('cart')) : []
+    } 
+    static getCartItem(){
+        return localStorage.getItem('cart')? JSON.parse(localStorage.getItem('cart')): []
     }
     
 }  
@@ -142,13 +160,15 @@ class Storage{
 document.addEventListener('DOMContentLoaded', ()=>{
     const products = new Products();
     const ui = new Ui();
-    ui.setupAPP();
-    products.getProducts().then(items=> {
-        ui.displayProducts(items) 
-        Storage.saveProducts(items)
+    ui.appStart()
+    products.getProducts().then(item =>{
+        ui.displayProducts(item)
+        Storage.saveProducts(item)
     }).then(()=>{
         ui.getButtonData()
+        ui.cartLogic()
     })
+        
     
 })
 

@@ -22,10 +22,13 @@
   .logo {
     font-family: "Carter One";
     border: 4px solid black;
-    border-radius: 10%;
+    border-radius: 50px;
     font-size: 20px;
     margin-left: 40px;
     text-transform: uppercase;
+    span {
+      padding: 1em;
+    }
   }
   a {
     font-family: "Carter One";
@@ -42,9 +45,8 @@
   }
 }
 .hero {
-  min-height: calc(100vh - 60px);
-  background: url("/demo-pc/b4638aa66c9882cbb725d1adf0fed6b0.jpg") center/cover
-    no-repeat;
+  min-height: 100vh;
+  background: url("/demo-pc/165496.jpg") center/cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -67,15 +69,24 @@
       width: 200px;
       border: none;
       font-family: "Carter One";
-      border-radius: 20px;
+      border-radius: 50px;
       font-size: 20px;
       font-weight: 900;
       color: white;
       outline: none;
       transition: 1s ease;
-      background: #6441a5;
-      background: -webkit-linear-gradient(to right, #6441a5, #2a0845);
-      background: linear-gradient(to right, #6441a5, #2a0845);
+      background: #2193b0; /* fallback for old browsers */
+      background: -webkit-linear-gradient(
+        to right,
+        #6dd5ed,
+        #2193b0
+      ); /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(
+        to right,
+        #6dd5ed,
+        #2193b0
+      ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
       cursor: pointer;
       animation: move 0.5s infinite alternate;
     }
