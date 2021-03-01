@@ -93,7 +93,7 @@ class Ui {
         cart.map(item => {
             tempTotal += item.price
         })
-        cartTotal.innerText = tempTotal   
+        cartTotal.innerText = parseFloat(tempTotal.toFixed(2))   
     }
     appStart(){
         cart = Storage.getCartItem()

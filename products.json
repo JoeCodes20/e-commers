@@ -28,7 +28,7 @@
             "pc": {"id": "4"},
             "fields":{
                 "title": "radeon 570 gpu",
-                "price": 85.99,
+                "price": 220.99,
                 "image": {"fields": {"file": {"url": "./pc images/radeon 570.png"}}}
             }
         },
@@ -36,7 +36,7 @@
             "pc": {"id": "5"},
             "fields":{
                 "title": "gtx 1660 gpu",
-                "price": 85.99,
+                "price": 249.99,
                 "image": {"fields": {"file": {"url": "./pc images/gtx 1660.png"}}}
             }
         },
@@ -44,7 +44,7 @@
             "pc": {"id": "6"},
             "fields":{
                 "title": "rtx 2080 gpu",
-                "price": 85.99,
+                "price": 399.99,
                 "image": {"fields": {"file": {"url": "./pc images/gtx 2080.png"}}}
             }
         }

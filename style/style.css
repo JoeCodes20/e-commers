@@ -60,7 +60,7 @@
 
 .hero {
   min-height: 100vh;
-  background: url("/demo-pc/165496.jpg") center/cover no-repeat;
+  background: url("/165496.jpg") center/cover no-repeat;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
